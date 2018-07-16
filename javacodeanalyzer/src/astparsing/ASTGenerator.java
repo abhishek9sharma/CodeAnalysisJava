@@ -62,7 +62,7 @@ public class ASTGenerator {
 		astparser.setSource(codeString.toCharArray());
 		astparser.setKind(ASTParser.K_COMPILATION_UNIT);
 
-		// this.astUnit = (CompilationUnit) parser.createAST(null);
+		//this.astcompilationUnit = (CompilationUnit) astparser.createAST(null);
 		this.astcompilationUnit = (CompilationUnit) astparser.createAST(new NullProgressMonitor());
 		// Setting up parameters
 		// visit package node

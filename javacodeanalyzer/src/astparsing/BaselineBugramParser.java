@@ -25,10 +25,12 @@ public class BaselineBugramParser extends ASTGenerator implements IJavaCodeParse
 
 	public void VisitPattern(JavaFileInfo jfileinfo)
 	{
-		this.SetCompilationUnitJavaFile(jfileinfo);		
 		MethodDeclarationNodeVisitor mdv = new MethodDeclarationNodeVisitor();
+		
 		try
 		{
+			this.SetCompilationUnitJavaFile(jfileinfo);		
+			
 			
 			this.astcompilationUnit.accept(mdv);
 		}

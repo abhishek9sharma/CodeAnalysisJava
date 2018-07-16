@@ -15,7 +15,7 @@ public class ExceptionLogger {
 	
 	private ExceptionLogger(String filepath) {
 		//System.out.println("COSNT CALLED");
-		logger=Logger.getLogger("ExecutionLog");
+		logger=Logger.getLogger("ExecutionLogException");
 		try 
 		{
 			logfile= new FileHandler(filepath);

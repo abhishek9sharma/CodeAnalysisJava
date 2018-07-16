@@ -27,28 +27,36 @@ public class AnalyzeFilesClient {
 	    	System.out.println(rootd);
 	    	
 	    	
-	    	
-			String logfilepath=cwd+"/Logs/ExecutionLog.txt";
-			String excplogfilepath=cwd+"/Logs/ExecutionLog.txt";
-			
+	    	String LogFileFolder=args[0];
+	    	//LogFileFolder=cwd;
+			String logfilepath=LogFileFolder+"/Logs/ExecutionLog.txt";
+			String excplogfilepath=LogFileFolder+"/Logs/ExecutionLog.txt";
 			CustomLogger.setLogger(logfilepath);
 			ExceptionLogger.setLogger(excplogfilepath);
 			
 	       
 	        //LOAD FILES TO PARSE
 			//SET BELOW PATH TO TEXT FILE WHICH CONTIANS PATH OF ALL JAVE FILES
-			String astfilelist="../TestProjectBugramSelf/alljavafiles.lst";
+			//String astfilelist="../TestProjectBugramSelf/alljavafiles.lst";
+			String astfilelist=args[1];
+			
 			ReadFromFile readF=new ReadFromFile(astfilelist);
 			Iterator<String> iterator = readF.linesinfile.iterator();
 			
 			
 			//SET ENVVARIABLE
-			AnalyzeFilesClient.classpathfolder="/home/oldmonk/.m2/repository";		
+			//AnalyzeFilesClient.classpathfolder="/home/oldmonk/.m2/repository";		
+			AnalyzeFilesClient.classpathfolder=args[2];		
+			
 			AnalyzeFilesClient.classpathjars=Environments.setClassPath(AnalyzeFilesClient.classpathfolder);
-			AnalyzeFilesClient.ASTTraceFolder=cwd+"/ASTOutput";
+			
+			String ASTFOLDER=args[3];	    	
+			AnalyzeFilesClient.ASTTraceFolder=ASTFOLDER+"/ASTOutput";
 			
 			//SET BELOW PATH TO CLONED PROJECTS FOLDER 
-			AnalyzeFilesClient.clonedprojectsfolder=rootd+"/";
+			String ClonedProjectsFolder=args[4];
+			AnalyzeFilesClient.clonedprojectsfolder=ClonedProjectsFolder+"/";			
+			//AnalyzeFilesClient.clonedprojectsfolder=rootd+"/";
 			AnalyzeFilesClient.sourcepathfinder="/src/main/java/";
 			
 			//PARSE FILES
@@ -74,7 +82,8 @@ public class AnalyzeFilesClient {
 							
 					}
 				}
-					else
+				
+				else
 					{
 						System.out.println("File at path " + javafiletoprocess + " Ignored");
 					}
