@@ -36,7 +36,6 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 	   
 	   public void addTOTrace(String trace_elemt)
 	   {
-			System.out.println(trace_elemt);
 			   System.out.println(trace_elemt);
 			   if(trace_elemt.contains("::UNRESOLVEBLK::"))
 			   {
@@ -72,6 +71,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 	    	   this.addTOTrace(trace_elemt);
 		   }
 		    return super.visit(node);
+		    //return false;
 	    }
 
 	   public boolean visit(ConstructorInvocation node)
@@ -188,10 +188,36 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 	   public boolean visit(IfStatement node) 
 	   {
 		   try 
-		   {
-			   String trace_elemt="<IF>,";
-		    	
-		    	this.addTOTrace(trace_elemt);
+		   { 
+			   IfStatement ifstmt = (IfStatement) node;
+			   Statement thenStatement = ifstmt.getThenStatement();
+			   Statement elseStatement = ifstmt.getElseStatement();
+			   Expression condition = ifstmt.getExpression();
+			   //System.out.println(ifstmt.getParent().getClass());
+			   String trace_elemt="";
+			   //if(!ifstmt.getParent().getClass().toString().equals("class org.eclipse.jdt.core.dom.IfStatement"))
+			   if(1==1)
+			   {
+				   
+				   trace_elemt="<IF>,";
+				   this.addTOTrace(trace_elemt);
+				   
+			   }
+			   if(thenStatement!=null)
+			   {
+				   thenStatement.accept(this);	
+				   //this.addTOTrace(trace_elemt);
+			   }
+			   
+			   if(elseStatement!=null)
+			   {
+				   trace_elemt="<ELSE>,";
+				   this.addTOTrace(trace_elemt);
+				   elseStatement.accept(this);
+			   }
+			   //elseStatement.accept(this);
+			   
+			   //this.addTOTrace(trace_elemt);
 
 		   }
 		   catch (Exception e) 
@@ -199,9 +225,12 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 			// TODO: handle exception
 			   String trace_elemt="::UNRESOLVEBLK::  if statement::UNRESOLVEBLK::  "+ node.toString();
 			   
-	    	this.addTOTrace(trace_elemt);
+			   this.addTOTrace(trace_elemt);
 		   }
-		   return super.visit(node);
+		   //return super.visit(node);
+		   //return !(ifStatement.getThenStatement() instanceof Block)
+		//	        && !(ifStatement.getElseStatement() instanceof Block);
+		   return false;
 	   	}
 	 
 	   	   
