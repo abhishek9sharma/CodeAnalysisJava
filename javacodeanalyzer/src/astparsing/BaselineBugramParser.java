@@ -61,7 +61,7 @@ public class BaselineBugramParser extends ASTGenerator implements IJavaCodeParse
 			
 			System.out.println("");
 			//System.out.println(bv.getTrace());
-			if(bv.getTrace().contains("UNRESOLVED"))
+			if(bv.TraceHasUnresolvedElements())
 					{
 						WriteTraceToFIle(bv.getTrace(), "UNRESOLVED_"+jfileinfo.opfilename+"."+m.getName());
 					}

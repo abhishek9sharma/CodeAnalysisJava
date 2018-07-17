@@ -14,22 +14,42 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 {
 		
 	   private String complationunittrace;
+	   private boolean unresolvedelmt=false;
+
 	   
 	   public String getTrace()
 	   {
 		   return this.complationunittrace;
 	   }
+
+	   public boolean TraceHasUnresolvedElements()
+	   {
+		return unresolvedelmt;
+	   }
 	   
 	   public void setTrace(String trace_elemt)
 	   {
-		   System.out.println(trace_elemt);
-		   this.complationunittrace=trace_elemt+"\n";
+		
+			   this.complationunittrace=trace_elemt+"\n";
+		   
 	   }
 	   
 	   public void addTOTrace(String trace_elemt)
 	   {
 			System.out.println(trace_elemt);
-		   this.complationunittrace+=trace_elemt+"\n";
+			   System.out.println(trace_elemt);
+			   if(trace_elemt.contains("::UNRESOLVEBLK::"))
+			   {
+				this.unresolvedelmt=true;
+				String[] traceArray = trace_elemt.split("::UNRESOLVEBLK::");
+				this.complationunittrace+=traceArray[traceArray.length-1]+",\n";
+			   }
+			   else
+			   {
+				   this.complationunittrace+=trace_elemt+"\n";
+			   }
+			   
+		   
 	   }
 	   
 	   public boolean visit( ClassInstanceCreation node) 
@@ -47,9 +67,9 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  class instance::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  class instance::UNRESOLVEBLK::  "+ node.toString();
 			   
-	    	this.addTOTrace(trace_elemt);
+	    	   this.addTOTrace(trace_elemt);
 		   }
 		    return super.visit(node);
 	    }
@@ -71,7 +91,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		    catch (Exception e) 
 			   {
 				// TODO: handle exception
-		    	String trace_elemt="UNRESOLVED  constructor invocation:: "+ node.toString();				
+		    	String trace_elemt="::UNRESOLVEBLK::  constructor invocation::UNRESOLVEBLK:: "+ node.toString();				
 	    		this.addTOTrace(trace_elemt);
 			   }
 		 
@@ -95,7 +115,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		    catch (Exception e) 
 			   {
 				// TODO: handle exception
-		    	String trace_elemt="UNRESOLVED  method invocation:: "+ node.getName().toString();
+		    	String trace_elemt="::UNRESOLVEBLK::  method invocation::UNRESOLVEBLK:: "+ node.getName().toString();
 				
 	    		this.addTOTrace(trace_elemt);
 			   }
@@ -120,7 +140,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		    catch (Exception e) 
 			   {
 				// TODO: handle exception
-		    	String trace_elemt="UNRESOLVED  catch clause::  "+ node.toString();
+		    	String trace_elemt="::UNRESOLVEBLK::  catch clause::UNRESOLVEBLK::  "+ node.toString();
 				
 	    		this.addTOTrace(trace_elemt);
 			   }
@@ -138,7 +158,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   }
 			 	   catch (Exception e) 
 				   {
-			 		  String trace_elemt="UNRESOLVED  return clause::  "+ node.toString();
+			 		  String trace_elemt="::UNRESOLVEBLK::  return clause::UNRESOLVEBLK::  "+ node.toString();
 					   
 	    			this.addTOTrace(trace_elemt);
 				   }
@@ -158,7 +178,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  try statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  try statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -177,7 +197,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  if statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  if statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -197,7 +217,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  while statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  while statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -217,7 +237,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  DO statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  DO statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -237,7 +257,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  FOR  statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  FOR  statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -257,7 +277,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  SWITCH statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  SWITCH statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -276,7 +296,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  CASE statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  CASE statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -296,7 +316,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  FOREACH statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  FOREACH statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -315,7 +335,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  ASSERT statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  ASSERT statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -334,7 +354,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  SYN statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  SYN statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -354,7 +374,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  BREAK statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  BREAK statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -374,7 +394,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  CONTINUE statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  CONTINUE statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -394,7 +414,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  ENDSYN statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  ENDSYN statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -414,7 +434,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  end try::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  end try::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -433,7 +453,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  end if statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  end if statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -455,7 +475,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  end while statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  end while statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -476,7 +496,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  end do statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  end do statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -497,7 +517,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  end for statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  end for statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -516,7 +536,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  end switch statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  end switch statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
@@ -536,7 +556,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 		   catch (Exception e) 
 		   {
 			// TODO: handle exception
-			   String trace_elemt="UNRESOLVED  end foreach statement::  "+ node.toString();
+			   String trace_elemt="::UNRESOLVEBLK::  end foreach statement::UNRESOLVEBLK::  "+ node.toString();
 			   
 	    	this.addTOTrace(trace_elemt);
 		   }
