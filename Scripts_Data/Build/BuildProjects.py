@@ -23,8 +23,9 @@ def build(*args):
     #return subprocess.check_output(['mvn'] + list(args),shell=True)
 
 #https://coderwall.com/p/tjc9oa/for-those-who-build-multiple-maven-projects-at-once
-def mvnbuild(dir):
-    os.chdir(dir)
+def mvnbuild(cdir):
+    cwd=os.getcwd()
+    os.chdir(cdir)
     process = subprocess.Popen(
         #"mvn clean install -DskipTests=true"
         "mvn clean install",
@@ -34,6 +35,7 @@ def mvnbuild(dir):
     #log(out, dir)
     #print(out)
     errcode = process.returncode
+    os.chdir(cwd)
     return (out, err, errcode)
 
 
@@ -44,26 +46,26 @@ except:
     print(" Plese provide proper arguments in the form python BuildProjects <FOLDE PATH where projects are cloned <MAVEN command to run>")
 
 
-projectstobuild=os.listdir(clonedprojectfolder)
+projectstobuild=[ i for i in os.listdir(clonedprojectfolder) if(os.path.isdir(os.path.join(clonedprojectfolder+i)))]
 logfile=open('Build_log_'+str(datetime.datetime.now()),'a')
 
 print("Processing projects in folder ::" + clonedprojectfolder)
 projcount=len(projectstobuild)
 failedprojcount=0
 processedprojcount=0
-#print("Total projects to build "+ str(projcount))
+print("Total projects to build "+ str(projcount))
 #logfile.write("Total projects to build "+ str(projcount)+"\n")
 
 
-for dir in projectstobuild:
-    path=dir
+for p in projectstobuild:
+    path=p
     fullpath=os.path.join(clonedprojectfolder+path)
     #print(fullpath)
     if(os.path.isdir(fullpath)):
         currfilelog=open('path.log','a')             
         try:
             #https://stackoverflow.com/questions/21377520/do-a-maven-build-in-a-python-script
-            if(not(dir.startswith('.'))):
+            if(not(p.startswith('.'))):
                 print("Procesiing " + path)
                 opofbuild=mvnbuild(fullpath)
                 if("BUILD SUCCESS" in opofbuild[0]):    
@@ -72,6 +74,7 @@ for dir in projectstobuild:
                 else:
                     print("Build failed for  project " + path+"\n")
                     logfile.write("Build failed for  project " + path+"\n")
+                    #logfile..write(op)
             '''
                 with changeDir(fullpath):
                     # ****** NOTE ******: using shell=True is strongly discouraged since it possesses security risks
