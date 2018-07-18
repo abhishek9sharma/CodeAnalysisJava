@@ -57,6 +57,7 @@ public class AnalyzeFilesClient {
 			String ClonedProjectsFolder=args[4];
 			AnalyzeFilesClient.clonedprojectsfolder=ClonedProjectsFolder+"/";			
 			//AnalyzeFilesClient.clonedprojectsfolder=rootd+"/";
+			//ASUMMPTION
 			AnalyzeFilesClient.sourcepathfinder="/src/main/java/";
 			
 			//PARSE FILES

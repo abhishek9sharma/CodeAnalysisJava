@@ -36,7 +36,7 @@ public class 	BaselineBugramVisitor extends ASTVisitor
 	   
 	   public void addTOTrace(String trace_elemt)
 	   {
-			   System.out.println(trace_elemt);
+			   //System.out.println(trace_elemt);
 			   if(trace_elemt.contains("::UNRESOLVEBLK::"))
 			   {
 				this.unresolvedelmt=true;
