@@ -44,6 +44,6 @@
         - [clonedprojects](CodeAnalysisJava/ProjectsToParse/projectstobecloned) : folder which will  contian the cloned projects and Build Files
         - [alljavafiles.lst](CodeAnalysisJava/ProjectsToParse/clonedprojects/alljavafiles.lst) : list of .java files whose AST is to be passed
 
-5.
 
-6. TO DO: Commands to build the javacodeanalyzer project form command line
+5. TO DO : Commands to compile/build the javacodeanalyzer project form command line
+6. TO DO : Commands to generate ASTs
